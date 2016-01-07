@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_black">#000000</color>
+    <color name="color_black_transparent">#aa000000</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_blue_android">#3366cc</color>
+    <color name="color_red_android">#cc3333</color>
+    <color name="color_purple_android">#AA66CC</color>
+    <color name="color_green_android">#99cc33</color>
+    <color name="color_yellow_android">#FFBB33</color>
+    <color name="color_gray">#C6C6C6</color>
+    <color name="color_gray_transparent">#aaC6C6C6</color>
+    
+    <color name="color_background_servi">#607D8B</color>
+    <color name="color_background_servi_transparent">#aa607D8B</color>
+    <color name="color_door_servi">#009BFF</color>
+    <color name="color_door_servi_transparent">#aa009BFF</color>
+    <!-- <color name="color_background_list_drawer">#aa61708D</color>
+    <color name="color_background_list_drawer_pressed">#aa384151</color> -->
+
+</resources>
