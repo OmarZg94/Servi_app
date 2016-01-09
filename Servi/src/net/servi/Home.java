@@ -3,7 +3,8 @@ package net.servi;
 import java.util.ArrayList;
 
 import net.servi.adapter.NavigationDrawerListAdapter;
-import net.servi.fragment.AvailableNowFragment;
+import net.servi.fragment.DialogFragmentInfo;
+import net.servi.fragment.FragmentAvailableNow;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -165,9 +166,10 @@ public class Home extends Activity implements OnItemClickListener {
 	private void displayView(int position) {
 		// update the main content by replacing fragments
 		Fragment fragment = null;
+		FragmentManager fragmentManager = getFragmentManager();
 		switch (position) {
 		case 0:
-			fragment = new AvailableNowFragment();
+			fragment = new FragmentAvailableNow();
 			break;
 		// case 1:
 		// fragment = new FindPeopleFragment();
@@ -178,9 +180,15 @@ public class Home extends Activity implements OnItemClickListener {
 		// case 3:
 		// fragment = new CommunityFragment();
 		// break;
-		// case 4:
-		// fragment = new InfoFragment();
-		// break;
+		case 4:
+			DialogFragmentInfo diFragmentInfo = new DialogFragmentInfo();
+			diFragmentInfo.setCancelable(false);
+			diFragmentInfo.show(fragmentManager, "DialogFragmentInfo");
+			mDrawerList.setItemChecked(0, true);
+			mDrawerList.setSelection(0);
+			setTitle(navMenuTitles[0]);
+			mDrawerLayout.closeDrawer(mDrawerList);
+			break;
 		case 5:
 			finish();
 			break;
@@ -189,7 +197,6 @@ public class Home extends Activity implements OnItemClickListener {
 		}
 
 		if (fragment != null) {
-			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.frame_container, fragment).commit();
 			// update selected item and title, then close the drawer

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@color/color_background_servi_transparent"
+    android:orientation="vertical" >
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_margin="15dp"
+        android:textColor="@color/color_white"
+        android:text="@string/version_of_app"/>
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_white"
+        android:layout_margin="15dp"
+        android:textSize="16sp"
+        android:text="@string/dialog_info"/>
+    <ImageButton 
+        android:id="@+id/btn_close_dialog_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/button_close"
+        android:background="@null"/>
+    
+
+</LinearLayout>

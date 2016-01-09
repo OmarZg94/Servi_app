@@ -184,29 +184,47 @@ public class DaoHorario extends DAO {
 	/**
 	 * Select
 	 */
-	public List<DtoHorario> SelectAvailableRooms(String day) {
+	public List<DtoHorario> SelectAvailableRooms(String day, String time) {
 		db = helper.getReadableDatabase();
 		query = "SELECT DISTINCT salon, "
 				+ day
-				+ " as day\n"
-				+ "FROM horario\n"
-				+ "WHERE salon \n"
-				+ "NOT IN (SELECT DISTINCT salon FROM horario WHERE "
+				+ " as day  \n"
+				+ "FROM horario  \n"
+				+ "WHERE salon   \n"
+				+ "NOT IN (SELECT DISTINCT salon FROM horario WHERE  \n"
 				+ day
-				+ "\n"
-				+ "BETWEEN time('now', 'localtime', '-01:30:00') AND time('now', 'localtime'))\n"
-				+ "GROUP BY salon";
+				+ " BETWEEN time('now', 'localtime', '-01:30:00') AND time('now', 'localtime')) \n"
+				+ "AND (day LIKE '%" + time + "%' "
+				+ (time.equals("AM") ? "OR day LIKE '%PM%')" : ")") + "\n"
+				+ "AND time('now','localtime'"+(time.equals("PM")?",'-12:00:00'":"")+")<=day\n"
+				+ "ORDER BY salon ASC, day ASC";
 		cursor = db.rawQuery(query, null);
 		List<DtoHorario> catalog = new ArrayList<DtoHorario>();
 		DtoHorario obj;
+		int salonInit = 0;
+		String timeInit = "";
 		if (cursor.moveToFirst()) {
-			int salon = cursor.getColumnIndexOrThrow(SALON);
-			int xday = cursor.getColumnIndexOrThrow("day");
+			salonInit = cursor.getInt(cursor.getColumnIndexOrThrow(SALON));
+			timeInit = cursor.getString(cursor.getColumnIndexOrThrow("day"));
 			do {
 				obj = new DtoHorario();
-				obj.setSalon(cursor.getInt(salon));
-				obj.setDay(cursor.getString(xday));
-				catalog.add(obj);
+				obj.setSalon(cursor.getInt(cursor.getColumnIndexOrThrow(SALON)));
+				obj.setDay(cursor.getString(cursor.getColumnIndexOrThrow("day")));
+				if (salonInit == obj.getSalon()) {
+					if (timeInit.equals(cursor.getString(cursor
+							.getColumnIndexOrThrow("day")))) {
+						catalog.add(obj);
+					} else {
+						timeInit = cursor.getString(cursor
+								.getColumnIndexOrThrow("day"));
+					}
+				} else {
+					salonInit = cursor.getInt(cursor
+							.getColumnIndexOrThrow(SALON));
+					timeInit = cursor.getString(cursor
+							.getColumnIndexOrThrow("day"));
+					catalog.add(obj);
+				}
 			} while (cursor.moveToNext());
 		}
 		cursor.close();

@@ -10,6 +10,10 @@
     <string name="synchro_failed">Descarga fallida, intentelo más tarde</string>
     <string name="menu_dialog_error_red">Error de red, intentelo mas tarde</string>
     
+    <!-- Info -->
+    <string name="version_of_app">Versión 0.5</string>
+    <string name="dialog_info">Hecho por Servi\u2122. IPN - ESCOM \u00A9 2016</string>
+    
     <!-- Home -->
     <string name="title_activity_home">Home</string>
     <string name="menu_drawer">Menú</string>

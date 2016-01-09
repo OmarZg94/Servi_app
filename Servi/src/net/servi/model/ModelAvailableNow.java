@@ -25,7 +25,11 @@ public class ModelAvailableNow {
 		c.setFirstDayOfWeek(Calendar.SUNDAY);
 		day = c.get(Calendar.DAY_OF_WEEK);
 		if (day > 1 & day < 7) {
-			lstDtoHorarios = daoHorario.SelectAvailableRooms(getDayString());
+			if(c.get(Calendar.HOUR_OF_DAY)<12){
+				lstDtoHorarios = daoHorario.SelectAvailableRooms(getDayString(), "AM");
+			} else {
+				lstDtoHorarios = daoHorario.SelectAvailableRooms(getDayString(), "PM");
+			}
 		}
 	}
 
