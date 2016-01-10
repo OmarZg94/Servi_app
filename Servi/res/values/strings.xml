@@ -19,12 +19,16 @@
     <string name="menu_drawer">Menú</string>
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
+    
+    <!-- Available Now -->
     <string name="classroom">Salon</string>
     <string name="until">Hasta</string>
     <string name="tomorrow">Mañana</string>
-    <string name="no_available">No hay salones disponibles por el momentos :(</string>
+    <string name="no_available">No hay salones disponibles por el momento :(</string>
+    <string name="no_available_weekend">No hay salones disponibles en fin de semana</string>
 
     <!-- Image Descriptions -->
     <string name="logo_description">Servi logo</string>
+    <string name="button_closed">Boton cerrar</string>
 
 </resources>

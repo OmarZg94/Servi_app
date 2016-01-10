@@ -1,5 +1,8 @@
 package net.servi.adapter;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -8,6 +11,7 @@ import net.servi.R;
 import net.servi.context.ContextApp;
 import net.servi.dto.DtoHorario;
 import net.servi.util.Config;
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+@SuppressLint("SimpleDateFormat")
 public class AdapterAvailableNow extends BaseAdapter /*
 													 * implements
 													 * FilterableCustom
@@ -23,6 +28,8 @@ public class AdapterAvailableNow extends BaseAdapter /*
 	private List<DtoHorario> list;
 	// private List<DtoHorario> mOriginalValues;
 	private LayoutInflater layoutInflater;
+	private Calendar now;
+	private DateFormat dateFormat;
 
 	@Override
 	public int getCount() {
@@ -43,6 +50,10 @@ public class AdapterAvailableNow extends BaseAdapter /*
 	public AdapterAvailableNow(List<DtoHorario> list) {
 		layoutInflater = LayoutInflater.from(ContextApp.context);
 		this.list = list;
+		now = Calendar.getInstance(TimeZone
+				.getTimeZone("America/Mexico_City"));
+		dateFormat = new SimpleDateFormat("hh:mm a");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("America/Mexico_City"));
 	}
 
 	@Override
@@ -68,43 +79,28 @@ public class AdapterAvailableNow extends BaseAdapter /*
 		txtUntil.setTag(dto);
 
 		txtRoom.setText(dto.getSalon() + "");
-		Calendar now = Calendar.getInstance(TimeZone
-				.getTimeZone("America/Mexico_City"));
-//		Calendar now = Calendar.getInstance(Locale.getDefault());
+		// Calendar now = Calendar.getInstance(Locale.getDefault());
 		int actualHour = now.get(Calendar.HOUR);
 		int actualMinute = now.get(Calendar.MINUTE);
 		Log.e(Config.TAG, "@dto.getDay(): " + dto.getDay());
 		int hourClass = Integer.parseInt(dto.getDay().substring(0, 2));
 		int minuteClass = Integer.parseInt(dto.getDay().substring(3, 5));
+		DateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+		String hour="";
+		try {
+			hour = dateFormat.format(inputFormat.parse(dto.getDay()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Log.e(Config.TAG, "@actualHour: " + actualHour + " actualMinute: "
 				+ actualMinute + "\nhourClass: " + hourClass + " minuteClass: "
 				+ minuteClass);
 		if (dto.getDay() != null) {
-			// If dto contains AM or PM so it indicates that the next class will
-			// be in the morning or in the afternoon
-			if ((dto.getDay().contains("AM") | dto.getDay().contains("PM"))
-					& now.get(Calendar.HOUR_OF_DAY) < 12) {
-				if (actualHour < hourClass) {
-					txtUntil.setText(dto.getDay());
-				} else if (actualHour == hourClass & actualMinute < minuteClass) {
-					txtUntil.setText(dto.getDay());
-				} else if(dto.getDay().contains("PM")) {
-					txtUntil.setText(dto.getDay());
-				} else {
-					txtUntil.setText(R.string.tomorrow);
-				}
-				// If dto contains PN so it indicates that the last class was in
-				// the
-				// afternoon
-			} else if (dto.getDay().contains("PM")
-					&& now.get(Calendar.HOUR_OF_DAY) > 12) {
-				if (actualHour < hourClass & !dto.getDay().contains("12")) {
-					txtUntil.setText(dto.getDay());
-				} else if (actualHour == hourClass & actualMinute < minuteClass) {
-					txtUntil.setText(dto.getDay());
-				} else {
-					txtUntil.setText(R.string.tomorrow);
-				}
+			if (actualHour < hourClass) {
+				txtUntil.setText(hour);
+			} else if (actualHour == hourClass & actualMinute < minuteClass) {
+				txtUntil.setText(hour);
 			} else {
 				txtUntil.setText(R.string.tomorrow);
 			}

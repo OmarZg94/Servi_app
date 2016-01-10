@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.servi"
-    android:versionCode="4"
+    android:versionCode="5"
     android:versionName="0.5" >
 
     <uses-sdk
@@ -41,7 +41,8 @@
         </activity>
         <activity
             android:name=".Home"
-            android:label="@string/title_activity_home" >
+            android:label="@string/title_activity_home"
+            android:launchMode="singleInstance" >
         </activity>
     </application>
 

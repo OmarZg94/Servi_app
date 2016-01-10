@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="@color/color_background_servi_transparent"
+    android:background="@color/color_background_servi"
     android:orientation="vertical" >
     
     <TextView 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:layout_margin="15dp"
         android:textColor="@color/color_white"
@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/button_close"
+        android:contentDescription="@string/button_closed"
         android:background="@null"/>
     
 

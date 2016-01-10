@@ -29,7 +29,6 @@ public class Synchro extends Activity implements OnClickListener {
 	private ProgressBar progressBar;
 	private TextView txtPercent;
 	private ImageButton btnContinue;
-	private Integer statusSync;
 	private ModelSynchronize modelSynchronize;
 	private MySharedPreferences mySharedPreferences;
 
@@ -83,7 +82,6 @@ public class Synchro extends Activity implements OnClickListener {
 
 	private Handler UIHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			statusSync = msg.what;
 			switch (msg.what) {
 			case HttpStatus.SC_OK:
 //				Toast.makeText(context, getString(R.string.synchro_successfull),

@@ -8,10 +8,12 @@ import net.servi.fragment.FragmentAvailableNow;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,8 +28,7 @@ public class Home extends Activity implements OnItemClickListener {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	// nav drawer title
-	private CharSequence mDrawerTitle;
+	private int positionClicked = 0;
 
 	// used to store app title
 	private CharSequence mTitle;
@@ -45,12 +46,12 @@ public class Home extends Activity implements OnItemClickListener {
 		init();
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
-			displayView(0);
+			displayView(positionClicked);
 		}
 	}
 
 	private void init() {
-		mTitle = mDrawerTitle = getTitle();
+		mTitle = getTitle();
 
 		// load slide menu items
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
@@ -107,7 +108,17 @@ public class Home extends Activity implements OnItemClickListener {
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
-
+	
+	@Override
+	protected void onResume() {
+		if (positionClicked==3 | positionClicked==4) {
+			displayView(0);
+		}else{
+			displayView(positionClicked);
+		}
+		super.onResume();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -130,8 +141,8 @@ public class Home extends Activity implements OnItemClickListener {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
-//		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+		// boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		// menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -177,9 +188,13 @@ public class Home extends Activity implements OnItemClickListener {
 		// case 2:
 		// fragment = new PhotosFragment();
 		// break;
-		// case 3:
-		// fragment = new CommunityFragment();
-		// break;
+		case 3:
+			sendMail();
+			mDrawerList.setItemChecked(0, true);
+			mDrawerList.setSelection(0);
+			setTitle(navMenuTitles[0]);
+			mDrawerLayout.closeDrawer(mDrawerList);
+			break;
 		case 4:
 			DialogFragmentInfo diFragmentInfo = new DialogFragmentInfo();
 			diFragmentInfo.setCancelable(false);
@@ -214,6 +229,16 @@ public class Home extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// display view for selected nav drawer item
-		displayView(position);
+		positionClicked = position;
+		displayView(positionClicked);
+	}
+	
+	private void sendMail(){
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("message/rfc822");
+		intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"admin@sindral.net"});
+		intent.putExtra(Intent.EXTRA_SUBJECT, "Contacto SERVI");
+		Intent mailer = Intent.createChooser(intent, null);
+		startActivity(mailer);
 	}
 }

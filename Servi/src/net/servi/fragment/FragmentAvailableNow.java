@@ -1,5 +1,8 @@
 package net.servi.fragment;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import net.servi.R;
 import net.servi.model.ModelAvailableNow;
 import android.app.Fragment;
@@ -16,22 +19,23 @@ public class FragmentAvailableNow extends Fragment {
 	private TextView txtNoAvailable;
 	private ModelAvailableNow modelAvailableNow;
 	private View view;
-	
+
 	public FragmentAvailableNow() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_available_now, container, false);
+		view = inflater.inflate(R.layout.fragment_available_now, container,
+				false);
 		init();
-        return view;
+		return view;
 	}
-	
+
 	@Override
 	public void onResume() {
-		if (modelAvailableNow.getSizeList()>0) {
+		if (modelAvailableNow.getSizeList() > 0) {
 			lstAvailableRooms.setAdapter(modelAvailableNow.getAdapterList());
 		} else {
 			lstAvailableRooms.setVisibility(View.GONE);
@@ -39,10 +43,17 @@ public class FragmentAvailableNow extends Fragment {
 		}
 		super.onResume();
 	}
-	
-	private void init(){
+
+	private void init() {
 		modelAvailableNow = new ModelAvailableNow();
-		lstAvailableRooms = (ListView)view.findViewById(R.id.lst_available_rooms);
-		txtNoAvailable = (TextView)view.findViewById(R.id.txt_no_availables);
+		lstAvailableRooms = (ListView) view
+				.findViewById(R.id.lst_available_rooms);
+		txtNoAvailable = (TextView) view.findViewById(R.id.txt_no_availables);
+		Calendar now = Calendar.getInstance(TimeZone
+				.getTimeZone("America/Mexico_City"));
+		if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+				| now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			txtNoAvailable.setText(getString(R.string.no_available_weekend));
+		}
 	}
 }

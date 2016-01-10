@@ -184,7 +184,7 @@ public class DaoHorario extends DAO {
 	/**
 	 * Select
 	 */
-	public List<DtoHorario> SelectAvailableRooms(String day, String time) {
+	public List<DtoHorario> SelectAvailableRooms(String day) {
 		db = helper.getReadableDatabase();
 		query = "SELECT DISTINCT salon, "
 				+ day
@@ -194,9 +194,7 @@ public class DaoHorario extends DAO {
 				+ "NOT IN (SELECT DISTINCT salon FROM horario WHERE  \n"
 				+ day
 				+ " BETWEEN time('now', 'localtime', '-01:30:00') AND time('now', 'localtime')) \n"
-				+ "AND (day LIKE '%" + time + "%' "
-				+ (time.equals("AM") ? "OR day LIKE '%PM%')" : ")") + "\n"
-				+ "AND time('now','localtime'"+(time.equals("PM")?",'-12:00:00'":"")+")<=day\n"
+				+ "AND time('now','localtime')<=day\n"
 				+ "ORDER BY salon ASC, day ASC";
 		cursor = db.rawQuery(query, null);
 		List<DtoHorario> catalog = new ArrayList<DtoHorario>();

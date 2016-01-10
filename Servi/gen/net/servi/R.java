@@ -1198,16 +1198,20 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f05000c;
         public static final int action_settings=0x7f05000e;
         public static final int app_name=0x7f050000;
+        public static final int button_closed=0x7f05001f;
+        /**  Available Now 
+         */
         public static final int classroom=0x7f050019;
         public static final int dialog_info=0x7f050014;
         public static final int drawer_close=0x7f050018;
         public static final int drawer_open=0x7f050017;
         /**  Image Descriptions 
          */
-        public static final int logo_description=0x7f05001d;
+        public static final int logo_description=0x7f05001e;
         public static final int menu_dialog_error_red=0x7f050012;
         public static final int menu_drawer=0x7f050016;
         public static final int no_available=0x7f05001c;
+        public static final int no_available_weekend=0x7f05001d;
         /**  Syncro 
          */
         public static final int synchro=0x7f05000f;
